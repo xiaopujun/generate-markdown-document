@@ -5,7 +5,7 @@
     <vendor email="1182810784@qq.com" url="">free company</vendor>
 
     <description><![CDATA[
-        <h3>使用方法</h3>
+       <h3>使用方法</h3>
         <ul>
             <li>第一步：遵循注释规范写书写方法、类的注释信息</li>
             <li>第二步：选中需要生成文档的代码部分，格式化代码（ctrl+alt+L）后复制代码</li>
@@ -20,6 +20,13 @@
             <li>@param：方法参数描述</li>
             <li>@return：方法返回值</li>
         </ul>
+        <p>info:如有建议或意见请联系我</p>
+        <p>邮箱：1182810784@qq.com</p>
+        <p>
+            如果觉得本插件对你有所帮助，欢迎star；
+            <a href="https://gitee.com/xiaopujun/generate-markdown-document">gitee</a>;
+            <a href="https://github.com/xiaopujun/generate-markdown-document">github</a>
+        </p>
     ]]></description>
 
     <change-notes><![CDATA[
