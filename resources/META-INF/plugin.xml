@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.your.company.unique.plugin.id</id>
+    <name>To Markdown Doc</name>
+    <version>1.0</version>
+    <vendor email="1182810784@qq.com" url="">free company</vendor>
+
+    <description><![CDATA[
+        <h3>使用方法</h3>
+        <ul>
+            <li>第一步：遵循注释规范写书写方法、类的注释信息</li>
+            <li>第二步：选中需要生成文档的代码部分，格式化代码（ctrl+alt+L）后复制代码</li>
+            <li>第三步：使用快捷键ctrl+K或Tools菜单中的Generate Markdown Document即可生成文档到剪切板中</li>
+            <li>第四步：在md格式的文件中粘贴文档即可</li>
+        </ul>
+        <h3>所支持的注释列表</h3>
+        <ul>
+            <li>@author：类作者</li>
+            <li>@date：文件创建日期</li>
+            <li>@description：方法、类功能描述</li>
+            <li>@param：方法参数描述</li>
+            <li>@return：方法返回值</li>
+        </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <ul>
+      <li>插件发布第一版，实现对类、方法注解的解析。类、方法注解可单独生成，亦可方法、类注解全部选中同时生成文档</li>
+    </ul>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.pyz.markdown.doc.tool.menu" class="com.pyz.markdown.doc.action.ToDocMenu"
+                text="Generate Markdown Document"
+                description="Generate markdown style document">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta K" second-keystroke="shift ctrl meta K"/>
+        </action>
+    </actions>
+
+</idea-plugin>
