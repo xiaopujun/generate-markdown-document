@@ -1,10 +1,12 @@
 <idea-plugin>
-    <id>com.your.company.unique.plugin.id</id>
+    <id>com.pyz.markdown.doc.tool</id>
     <name>To Markdown Doc</name>
     <version>1.0</version>
     <vendor email="1182810784@qq.com" url="">ctbu</vendor>
 
     <description><![CDATA[
+        <p>这是一个通过正则表达式解析java注释信息，从而生成markdown格式文档的插件</p>
+        <p>This is a regular expression parsing java comment information, so as to generate markdown format document plug-in</p>
        <h3>使用方法</h3>
         <ul>
             <li>第一步：遵循注释规范写书写方法、类的注释信息</li>
