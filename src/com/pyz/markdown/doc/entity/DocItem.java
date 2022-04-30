@@ -1,7 +1,5 @@
 package com.pyz.markdown.doc.entity;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 
