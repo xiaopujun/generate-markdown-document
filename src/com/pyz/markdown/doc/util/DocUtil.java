@@ -68,7 +68,7 @@ public class DocUtil {
     /**
      * 匹配单个参数类型
      */
-    private static final Pattern paramItemRegex = Pattern.compile("(\\w+\\s\\w+)|(\\w+\\<.*\\>\\s\\w+)");
+    private static final Pattern paramItemRegex = Pattern.compile("(\\w+\\s\\w+)|((\\w+(<\\w+,?\\s?)+)+(,?\\s?\\w+>+(,\\s)*)+)+\\s\\w+");
     /**
      * 匹配类名或方法名
      */
@@ -147,26 +147,17 @@ public class DocUtil {
             Matcher paramItemMatcher = paramItemRegex.matcher(group);
             while (paramItemMatcher.find()) {
                 String param = paramItemMatcher.group();
-                if (param.contains("<") || param.contains(".")) {
-                    param = param.replace(", ", ",");
-                    String[] params = param.split("\\s");
-                    String type = params[0];
-                    String name = params[1];
-                    if (paramItemMap.containsKey(name)) {
-                        ParamItem item = paramItemMap.get(name);
-                        item.setParamType(type);
-                    }
-                } else {
-                    String[] params = param.split("\\s");
-                    String type = params[0];
-                    String name = params[1];
-                    if (paramItemMap.containsKey(name)) {
-                        ParamItem item = paramItemMap.get(name);
-                        item.setParamType(type);
-                    }
+                int index = param.lastIndexOf(" ");
+                String paramName = param.substring(index + 1);
+                String paramType = param.substring(0, index);
+                paramType = paramType.replaceAll("<", "\\\\<")
+                        .replaceAll(">", "\\\\>");
+                System.out.println(param);
+                if (paramItemMap.containsKey(paramName)) {
+                    ParamItem paramItem = paramItemMap.get(paramName);
+                    paramItem.setParamType(paramType);
                 }
             }
-
         }
         return res;
     }
