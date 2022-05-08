@@ -1,12 +1,14 @@
-package com.pyz.markdown.doc.config;
+package com.pyz.markdown.doc.setting;
 
 import javax.swing.*;
 
+/**
+ * gmd配置组件类
+ */
 public class GmdSetting {
     private JPanel gmdSettingPanel;
     private JTextArea classTemplate;
     private JTextArea methodTemplate;
-    private JTextArea fieldTemplate;
     private JLabel classLabel;
     private JLabel methodLabel;
     private JLabel fieldLabel;
@@ -21,10 +23,6 @@ public class GmdSetting {
 
     public JTextArea getMethodTemplate() {
         return methodTemplate;
-    }
-
-    public JTextArea getFieldTemplate() {
-        return fieldTemplate;
     }
 
     public JLabel getClassLabel() {

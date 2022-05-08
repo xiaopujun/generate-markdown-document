@@ -2,7 +2,7 @@ package com.pyz.markdown.doc.util;
 
 
 import com.intellij.openapi.ui.MessageType;
-import com.pyz.markdown.doc.config.AppSettingsState;
+import com.pyz.markdown.doc.setting.GmdSettingsState;
 import com.pyz.markdown.doc.entity.DataNode;
 import com.pyz.markdown.doc.entity.DocItem;
 import com.pyz.markdown.doc.entity.ParamItem;
@@ -129,15 +129,10 @@ public class DocUtil {
             //处理匹配到的param数据
             paramStr = paramStr.replaceAll("\\s+\\*\\s+", "")
                     .replaceAll("\\s{2,}", " ");
-            String[] split = paramStr.split("\\s+");
-            if (split.length == 3) {
-                //符合规范规范的注解
-                item.setParamName(split[1]);
-                item.setParamDetail(split[2]);
-                res.add(item);
-            } else {
-                warningInfoList.add("参数说明注释不符合规范，请检查：" + paramStr + "\n");
-            }
+            paramStr = paramStr.substring(paramStr.indexOf(" ") + 1);
+            int splitIndex = paramStr.indexOf(" ");
+            item.setParamName(paramStr.substring(0, splitIndex));
+            item.setParamDetail(paramStr.substring(splitIndex + 1));
         }
         //计算参数名与参数实体的映射关系
         Map<String, ParamItem> paramItemMap = res.stream().collect(Collectors.toMap(ParamItem::getParamName, i -> i));
@@ -153,7 +148,6 @@ public class DocUtil {
                 String paramType = param.substring(0, index);
                 paramType = paramType.replaceAll("<", "\\\\<")
                         .replaceAll(">", "\\\\>");
-                System.out.println(param);
                 if (paramItemMap.containsKey(paramName)) {
                     ParamItem paramItem = paramItemMap.get(paramName);
                     paramItem.setParamType(paramType);
@@ -175,12 +169,7 @@ public class DocUtil {
             String paramStr = matcher.group();
             paramStr = paramStr.replaceAll("\\s+\\*\\s*", "")
                     .replaceAll("\\s{2,}", " ");
-            String[] split = paramStr.split("\\s+");
-            if (split.length >= 2) {
-                res = split[1];
-            } else {
-                warningInfoList.add("返回信息注释不符合规范，请检查：" + paramStr + "\n");
-            }
+            res = paramStr.substring(paramStr.indexOf(" ") + 1);
         }
         return res;
     }
@@ -195,12 +184,7 @@ public class DocUtil {
         Matcher matcher = dateRegex.matcher(input);
         while (matcher.find()) {
             String paramStr = matcher.group();
-            String[] split = paramStr.split("\\s+");
-            if (split.length == 2) {
-                res = split[1];
-            } else {
-                warningInfoList.add("日期注释不符合规范，请检查：" + paramStr + "\n");
-            }
+            res = paramStr.substring(paramStr.indexOf(" ") + 1);
         }
         return res;
     }
@@ -215,12 +199,7 @@ public class DocUtil {
         Matcher matcher = authorRegex.matcher(input);
         while (matcher.find()) {
             String paramStr = matcher.group();
-            String[] split = paramStr.split("\\s+");
-            if (split.length >= 2) {
-                res = split[1];
-            } else {
-                warningInfoList.add("作者注释不符合规范，请检查：" + paramStr + "\n");
-            }
+            res = paramStr.substring(paramStr.indexOf(" ") + 1);
         }
         return res;
     }
@@ -237,12 +216,7 @@ public class DocUtil {
             String paramStr = matcher.group();
             paramStr = paramStr.replaceAll("\\s+\\*\\s*", "")
                     .replaceAll("\\s{2,}", " ");
-            String[] split = paramStr.split("\\s+");
-            if (split.length >= 2) {
-                res = split[1];
-            } else {
-                warningInfoList.add("说明文字注释不符合规范，请检查：" + paramStr + "\n");
-            }
+            res = paramStr.substring(paramStr.indexOf(" ") + 1);
         }
         return res;
     }
@@ -259,10 +233,6 @@ public class DocUtil {
             return 0;
         else
             return 1;
-//        matcher = methodRegex.matcher(input);
-//        boolean methodNote = matcher.find();
-//        if (methodNote) return 1;
-//        return 1;
     }
 
     /**
@@ -277,11 +247,7 @@ public class DocUtil {
             String matcherStr = matcher.group();
             if (type == 0) {
                 //类名
-                String[] split = matcherStr.split("\\s+");
-                if (split.length == 2)
-                    res = split[1];
-                else
-                    warningInfoList.add("类名解析失败，请检查：" + matcherStr);
+                res = matcherStr.substring(matcherStr.indexOf(" ") + 1);
             } else {
                 //方法名
                 res = matcherStr.replaceFirst("\\(.*\\)", "");
@@ -336,12 +302,12 @@ public class DocUtil {
         int total = 1;
         if (docItems != null && docItems.size() > 0) {
             //读取配置模板
-            AppSettingsState setting = AppSettingsState.getInstance();
-            String methodTemplate = setting.methodTemplate;
+            GmdSettingsState setting = GmdSettingsState.getInstance();
+            String methodTemplate = setting.getMethodTemplate();
             for (DocItem docItem : docItems) {
                 if (docItem.getDocType() == 0) {
                     //类文档
-                    String classTemplate = setting.classTemplate;
+                    String classTemplate = setting.getClassTemplate();
                     String classDoc = classTemplate.replace("@{className}@", docItem.getName())
                             .replace("@{author}@", docItem.getAuthor())
                             .replace("@{date}@", docItem.getDate())

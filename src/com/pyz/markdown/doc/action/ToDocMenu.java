@@ -7,7 +7,6 @@ import com.intellij.notification.Notifications;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.MessageType;
-import com.pyz.markdown.doc.config.AppSettingsState;
 import com.pyz.markdown.doc.entity.DataNode;
 import com.pyz.markdown.doc.entity.DocItem;
 import com.pyz.markdown.doc.util.DocUtil;
