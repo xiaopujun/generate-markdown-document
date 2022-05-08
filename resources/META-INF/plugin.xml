@@ -47,6 +47,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <applicationService serviceImplementation="com.pyz.markdown.doc.config.AppSettingsState"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.pyz.markdown.doc.config.AppSettingsConfigurable"
+                id="com.pyz.markdown.doc.config.AppSettingsConfigurable"
+                displayName="Generate Markdown Document"/>
     </extensions>
 
     <actions>

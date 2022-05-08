@@ -2,6 +2,7 @@ package com.pyz.markdown.doc.util;
 
 
 import com.intellij.openapi.ui.MessageType;
+import com.pyz.markdown.doc.config.AppSettingsState;
 import com.pyz.markdown.doc.entity.DataNode;
 import com.pyz.markdown.doc.entity.DocItem;
 import com.pyz.markdown.doc.entity.ParamItem;
@@ -334,52 +335,56 @@ public class DocUtil {
         StringBuilder docBuilder = new StringBuilder();
         int total = 1;
         if (docItems != null && docItems.size() > 0) {
+            //读取配置模板
+            AppSettingsState setting = AppSettingsState.getInstance();
+            String methodTemplate = setting.methodTemplate;
             for (DocItem docItem : docItems) {
                 if (docItem.getDocType() == 0) {
                     //类文档
-                    docBuilder.append("# 接口类：")
-                            .append(docItem.getName())
-                            .append("\n\n")
-                            .append("> - 作者：")
-                            .append(docItem.getAuthor())
-                            .append("\n").append("> - 日期：")
-                            .append(docItem.getDate())
-                            .append("\n").append("> - 描述：")
-                            .append(docItem.getDescription())
-                            .append("\n\n");
+                    String classTemplate = setting.classTemplate;
+                    String classDoc = classTemplate.replace("@{className}@", docItem.getName())
+                            .replace("@{author}@", docItem.getAuthor())
+                            .replace("@{date}@", docItem.getDate())
+                            .replace("@{description}@", docItem.getDescription());
+
+                    docBuilder.append(classDoc).append("\n\n");
                 } else {
-                    //方法文档
-                    docBuilder.append("## 接口")
-                            .append(total).append("：")
-                            .append(docItem.getName())
-                            .append("\n\n")
-                            .append("- 接口概览：\n\n```java\n")
-                            .append(docItem.getOverview())
-                            .append("\n```\n")
-                            .append("- 功能描述：")
-                            .append(docItem.getDescription())
-                            .append("\n- 返回值：")
-                            .append(docItem.getRes())
-                            .append("\n- 参数列表：\n\n")
-                            .append("|序号|参数名|参数说明|参数类型|\n|----|----|----|----|\n");
-                    List<ParamItem> params = docItem.getParams();
-                    for (int i = 0; i < params.size(); i++) {
-                        docBuilder.append("|").
-                                append(i + 1)
-                                .append("|")
-                                .append(params.get(i).getParamName())
-                                .append("|")
-                                .append(params.get(i).getParamDetail())
-                                .append("|")
-                                .append(params.get(i).getParamType())
-                                .append("|\n");
-                    }
+                    String methodDoc = methodTemplate.replace("@{serialNo}@", total + "")
+                            .replace("@{methodName}@", docItem.getName())
+                            .replace("@{codePreview}@", new StringBuilder("").append("\n\n```java\n").append(docItem.getOverview()).append("\n```\n"))
+                            .replace("@{description}@", docItem.getDescription())
+                            .replace("@{return}@", docItem.getRes())
+                            .replace("@{paramList}@", generateParamListDoc(docItem.getParams()));
                     total++;
+                    docBuilder.append(methodDoc).append("\n\n");
+                    //方法文档
                 }
             }
             res = docBuilder.toString();
         }
         return res;
+    }
+
+
+    /**
+     * @param paramItemList 参数List
+     * @return markdown格式的参数说明表格
+     * @deprecated 生成参数列表对应的markdown表格
+     */
+    private static String generateParamListDoc(List<ParamItem> paramItemList) {
+        StringBuilder paramBuilder = new StringBuilder("|序号|参数名|参数说明|参数类型|\n|----|----|----|----|\n");
+        for (int i = 0; i < paramItemList.size(); i++) {
+            paramBuilder.append("|").
+                    append(i + 1)
+                    .append("|")
+                    .append(paramItemList.get(i).getParamName())
+                    .append("|")
+                    .append(paramItemList.get(i).getParamDetail())
+                    .append("|")
+                    .append(paramItemList.get(i).getParamType())
+                    .append("|\n");
+        }
+        return paramBuilder.toString();
     }
 
     /**
