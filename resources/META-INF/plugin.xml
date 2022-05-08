@@ -5,27 +5,31 @@
     <vendor email="1182810784@qq.com" url="">ctbu</vendor>
 
     <description><![CDATA[
-        <p>这是一个通过正则表达式解析java注释信息，从而生成markdown格式文档的插件</p>
-        <p>This is a regular expression parsing java comment information, so as to generate markdown format document plug-in</p>
-       <h3>使用方法</h3>
-        <ul>
-            <li>第一步：遵循注释规范写书写方法、类的注释信息</li>
-            <li>第二步：选中需要生成文档的代码部分，格式化代码（ctrl+alt+L）后复制代码</li>
-            <li>第三步：使用快捷键ctrl+K或Tools菜单中的Generate Markdown Document即可生成文档到剪切板中</li>
-            <li>第四步：在md格式的文件中粘贴文档即可</li>
-        </ul>
-        <h3>所支持的注释列表</h3>
-        <ul>
-            <li>@author：类作者</li>
-            <li>@date：文件创建日期</li>
-            <li>@description：方法、类功能描述</li>
-            <li>@param：方法参数描述</li>
-            <li>@return：方法返回值</li>
-        </ul>
-        <p>info:如有建议或意见请联系我</p>
-        <p>邮箱：1182810784@qq.com</p>
+        <p>This is a plugin that automatically generates Markdown formatted documents by parsing comments with regular expressions</p>
         <p>
-            如果觉得本插件对你有所帮助，欢迎star；
+        It supports.
+        <ul>
+             <li>automatic generation of documents based on comments</li>
+             <li>custom document templates</li>
+        </ul>
+       </p>
+       <h3>How to use</h3>
+        <ul>
+            <li>Step 1: Follow the comment specification to write methods, class comment information</li>
+            <li>Step 2: Select the part of the code that needs to generate the document, format the code (ctrl+alt+L) and copy the code</li>
+            <li>Step 3: use the shortcut ctrl + K or Tools menu in the Generate Markdown Document can generate a document to the clipboard</li>
+            <li>Step 4: in the md format file to paste the document</li>
+        </ul>
+        <h3>List of supported annotations</h3>
+        <ul>
+            <li>@author：Class Author</li>
+            <li>@date：File creation date</li>
+            <li>@description：Method, class function description</li>
+            <li>@param：Description of method parameters</li>
+            <li>@return：Method return value</li>
+        </ul>
+        <p>
+            If you find this plugin helpful, welcome star；
             <a href="https://gitee.com/xiaopujun/generate-markdown-document">gitee</a>;
             <a href="https://github.com/xiaopujun/generate-markdown-document">github</a>
         </p>
@@ -33,7 +37,8 @@
 
     <change-notes><![CDATA[
     <ul>
-      <li>插件发布第一版，实现对类、方法注解的解析。类、方法注解可单独生成，亦可方法、类注解全部选中同时生成文档</li>
+      <li>Plugin Release Version 1</li>
+      <li>Support custom document templates and fix some bugs</li>
     </ul>
     ]]>
     </change-notes>
