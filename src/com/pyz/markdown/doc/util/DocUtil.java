@@ -49,19 +49,19 @@ public class DocUtil {
     /**
      * 获取@description描述
      */
-    private static final Pattern descriptionRegex = Pattern.compile("@description[^@/]+");
+    private static final Pattern descriptionRegex = Pattern.compile("@d?D?escription:?：?[^@/]+");
     /**
      * 获取@return描述
      */
-    private static final Pattern returnRegex = Pattern.compile("@return[^@/]+");
+    private static final Pattern returnRegex = Pattern.compile("@return:?：?[^@/]+");
     /**
      * 获取@author
      */
-    private static final Pattern authorRegex = Pattern.compile("@author\\s+.*");
+    private static final Pattern authorRegex = Pattern.compile("@a?A?uthor:?：?\\s+.*");
     /**
      * 获取@date
      */
-    private static final Pattern dateRegex = Pattern.compile("@date\\s+.*");
+    private static final Pattern dateRegex = Pattern.compile("@d?D?ate:?：?\\s+.*");
     /**
      * 匹配方法参数
      */
@@ -133,6 +133,7 @@ public class DocUtil {
             int splitIndex = paramStr.indexOf(" ");
             item.setParamName(paramStr.substring(0, splitIndex));
             item.setParamDetail(paramStr.substring(splitIndex + 1));
+            res.add(item);
         }
         //计算参数名与参数实体的映射关系
         Map<String, ParamItem> paramItemMap = res.stream().collect(Collectors.toMap(ParamItem::getParamName, i -> i));
